@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Carlos Santos - Analista de Cyber Security | Pentest | OSINT | Linux | TryHackMe"/>
+  <title>Carlos Santos | Cyber Security</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --text: #c9d1d9;
+      --neon: #0f0;
+      --accent: #58a6ff;
+      --dark: #161b22;
+      --border: #30363d;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Roboto Mono', monospace;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    canvas { position: fixed; top:0; left:0; z-index:-1; opacity:0.15; will-change: transform; }
+    .scan-line {
+      position: fixed; top:0; left:0; width:100%; height:3px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      animation: scan 4s linear infinite;
+      pointer-events: none; z-index: 10;
+      transform: translateZ(0);
+    }
+    @keyframes scan { 0% { transform: translateY(-100px); } 100% { transform: translateY(100vh); } }
+    .terminal {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0,255,0,0.2);
+      animation: boot 1s ease-out;
+      position: relative;
+    }
+    @keyframes boot { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
+    .header {
+      background: var(--dark);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .dots { display: flex; gap: 10px; }
+    .dot { width:12px; height:12px; border-radius:50%; }
+    .dot.red { background:#ff5f56; }
+    .dot.yellow { background:#ffbd2e; }
+    .dot.green { background:#27c93f; }
+    .title { color:var(--accent); font-family:'Orbitron', sans-serif; font-size:0.9rem; }
+    .lang-switch {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      color: var(--neon);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .lang-switch:hover { background: var(--neon); color: var(--bg); }
+    .content { padding:30px; }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      color: var(--neon);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h2 {
+      font-size: 1.6rem;
+      color: var(--neon);
+      margin: 35px 0 15px;
+      position: relative;
+      padding-bottom: 8px;
+    }
+    h2::after {
+      content:''; position:absolute; bottom:0; left:0;
+      width:60px; height:3px; background:var(--neon); border-radius:2px;
+    }
+    .glitch { animation: glitch 2s infinite; }
+    @keyframes glitch {
+      0%,100% { text-shadow: 0 0 5px var(--neon); }
+      20% { text-shadow: 2px 0 #f0f, -2px 0 #0ff; }
+      40% { text-shadow: -2px 0 #f0f, 2px 0 #0ff; }
+    }
+    ul { margin:12px 0; padding-left:22px; }
+    li { margin:6px 0; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { color:#79c0ff; text-decoration:underline; }
+    .badges {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+      margin: 20px 0;
+    }
+    .badges img {
+      height: 34px;
+      transition: all 0.3s;
+      filter: drop-shadow(0 0 5px rgba(0,255,0,0.3));
+      will-change: transform, filter;
+    }
+    .badges img:hover {
+      transform: scale(1.15) rotate(3deg);
+      animation: badge-glitch 0.4s;
+      filter: hue-rotate(90deg) drop-shadow(0 0 10px var(--neon));
+    }
+    @keyframes badge-glitch {
+      0%,100% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(3px, -3px); }
+      60% { transform: translate(-3px, -3px); }
+      80% { transform: translate(3px, 3px); }
+    }
+    .typing {
+      overflow: hidden;
+      border-right: 2px solid var(--neon);
+      white-space: nowrap;
+      width: 0;
+      animation: blink 0.7s infinite;
+    }
+    @keyframes typing { from { width:0; } to { width:100%; } }
+    @keyframes blink { 50% { border-color:transparent; } }
+
+    /* Terminal Output */
+    #terminal-output {
+      max-height: 300px;
+      overflow-y: auto;
+      margin: 20px 0;
+      padding-right: 10px;
+      font-family: 'Courier New', monospace;
+    }
+    #terminal-output > div {
+      margin: 8px 0;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .terminal-input {
+      margin-top: 40px;
+      font-family: 'Courier New', monospace;
+      color: var(--neon);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #cursor { animation: blink 1s infinite; color: var(--neon); }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #8b949e;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 600px) {
+      .content { padding:20px; }
+      h1 { font-size:1.8rem; }
+      .badges { gap:8px; }
+      .badges img { height:30px; }
+      .lang-switch { font-size: 0.7rem; padding: 3px 6px; }
+      .terminal-input { flex-wrap: wrap; }
+    }
+
+    /* Acessibilidade */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="scan-line"></div>
+
+  <div class="terminal">
+    <div class="header">
+      <div class="dots">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+      </div>
+      <div class="title">root@cadush:~$</div>
+      <div class="lang-switch" id="langSwitch">EN</div>
+    </div>
+
+    <div class="content">
+      <!-- Título com typing -->
+      <h1 id="typed-title" class="typing glitch" data-text="Carlos Santos">Carlos Santos</h1>
+
+      <!-- About Me -->
+      <section class="scan-section">
+        <h2 class="glitch" data-text="Sobre Mim" data-en="About Me">Sobre Mim</h2>
+        <p class="typing"
+           data-text="Olá! Eu sou &lt;strong&gt;Carlos Santos&lt;/strong&gt;, Analista de Segurança da Informação."
+           data-en="Hi! I'm &lt;strong&gt;Carlos Santos&lt;/strong&gt;, Information Security Analyst.">
+          Olá! Eu sou <strong>Carlos Santos</strong>, Analista de Segurança da Informação.
+        </p>
+        <p class="typing"
+           data-text="&lt;strong&gt;Experiência:&lt;/strong&gt;"
+           data-en="&lt;strong&gt;Experience:&lt;/strong&gt;">
+          <strong>Experiência:</strong>
+        </p>
+        <ul>
+          <li class="typing" data-text="Identificação, análise e mitigação de vulnerabilidades" data-en="Vulnerability identification, analysis, and mitigation">Identificação, análise e mitigação de vulnerabilidades</li>
+          <li class="typing" data-text="Investigação judicial com OSINT" data-en="Forensic investigations using OSINT">Investigação judicial com OSINT</li>
+          <li class="typing" data-text="Avaliação de vulnerabilidades em redes e sistemas" data-en="Network and system vulnerability assessment">Avaliação de vulnerabilidades em redes e sistemas</li>
+          <li class="typing" data-text="Administração de servidores Linux e Windows" data-en="Linux and Windows server administration">Administração de servidores Linux e Windows</li>
+        </ul>
+        <ul style="list-style:none; padding-left:0;">
+          <li class="typing" data-text="Atualmente: Analista de Segurança da Informação & TI II" data-en="Currently: Information Security & IT Analyst II">Atualmente: Analista de Segurança da Informação & TI II</li>
+          <li class="typing" data-text="Aprendendo: LPI 101 | CC ISC² | CRTA" data-en="Learning: LPI 101 | CC ISC² | CRTA">Aprendendo: LPI 101 | CC ISC² | CRTA</li>
+          <li class="typing" data-text="Pergunte sobre: Linux, Redes, Segurança da Informação" data-en="Ask me about: Linux, Networking, Cybersecurity">Pergunte sobre: Linux, Redes, Segurança da Informação</li>
+          <li class="typing"
+              data-text="Contato: &lt;a href='https://www.linkedin.com/in/cadush/' target='_blank'&gt;LinkedIn&lt;/a&gt;"
+              data-en="Contact: &lt;a href='https://www.linkedin.com/in/cadush/' target='_blank'&gt;LinkedIn&lt;/a&gt;">
+            Contato: <a href="https://www.linkedin.com/in/cadush/" target="_blank">LinkedIn</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Technologies -->
+      <section class="scan-section">
+        <h2 class="glitch" data-text="Tecnologias" data-en="Technologies">Tecnologias</h2>
+        <div class="badges" id="tech-badges"></div>
+      </section>
+
+      <!-- Certifications -->
+      <section class="scan-section">
+        <h2 class="glitch" data-text="Certificações" data-en="Certifications">Certificações</h2>
+        <p style="text-align:center; margin-bottom:15px;">
+          <a href="https://www.linkedin.com/in/cadush/details/certifications/" target="_blank"
+             style="color:var(--neon); text-decoration:none; font-weight:bold;"
+             data-text="Ver todas no LinkedIn" data-en="View all on LinkedIn">Ver todas no LinkedIn</a>
+        </p>
+        <div class="badges" id="cert-badges"></div>
+      </section>
+
+      <!-- Projects -->
+      <section class="scan-section">
+        <h2 class="glitch" data-text="Projetos" data-en="Projects">Projetos</h2>
+        <ul>
+          <li><a href="https://github.com/Cadush/SCAN_REDE" target="_blank">SCAN_REDE</a> – <span data-text="Script Bash para escaneamento de redes locais." data-en="Bash script for local network scanning.">Script Bash para escaneamento de redes locais.</span></li>
+          <li><a href="https://github.com/Cadush/imapsync_Migracao" target="_blank">imapsync_Migracao</a> – <span data-text="Automação de migração de e-mails IMAP." data-en="IMAP email migration automation.">Automação de migração de e-mails IMAP.</span></li>
+          <li><a href="https://github.com/Cadush/Backup" target="_blank">Backup</a> – <span data-text="Backup automatizado com rsync + cron." data-en="Automated backup with rsync + cron.">Backup automatizado com rsync + cron.</span></li>
+        </ul>
+      </section>
+
+      <!-- Skills -->
+      <section class="scan-section">
+        <h2 class="glitch" data-text="Skills" data-en="Skills">Skills</h2>
+        <div style="columns:2; column-gap:20px;">
+          <ul style="padding-left:20px;">
+            <li>Linux / Windows Server</li>
+            <li>Shell Script / PowerShell / Python</li>
+            <li>Firewall: pfSense, Fortinet</li>
+            <li>IDS/IPS: Suricata, Snort</li>
+            <li>SIEM: Wazuh, Splunk, Sentinel</li>
+          </ul>
+          <ul style="padding-left:20px;">
+            <li>SOAR: TheHive + Cortex, Shuffle</li>
+            <li>Backup: OneDrive, rsync</li>
+            <li>Monitoramento: Zabbix, Grafana</li>
+            <li>Virtualização: VMware, Proxmox</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- TryHackMe -->
+      <section class="scan-section">
+        <h2 class="glitch" data-text="TryHackMe" data-en="TryHackMe">TryHackMe</h2>
+        <div style="display:flex; justify-content:center; margin:20px 0;">
+          <a href="https://tryhackme.com/p/c.sh" target="_blank" style="text-decoration:none;">
+            <img src="https://tryhackme-badges.s3.amazonaws.com/c.sh.png" alt="TryHackMe Badge" style="max-width:380px; width:100%; border-radius:12px; border:2px solid var(--neon); box-shadow:0 0 20px rgba(0,255,0,0.4); transition:all 0.4s ease; animation:scan-badge 3s linear infinite;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(0,255,0,0.7)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(0,255,0,0.4)'"/>
+          </a>
+        </div>
+        <p style="text-align:center; color:#8b949e; font-size:0.9rem;">
+          <a href="https://tryhackme.com/p/c.sh" target="_blank" style="color:var(--accent);" data-text="Ver perfil completo no TryHackMe" data-en="View full profile on TryHackMe">Ver perfil completo no TryHackMe</a>
+        </p>
+      </section>
+
+      <!-- Terminal Output -->
+      <div id="terminal-output"></div>
+
+      <!-- Terminal Input -->
+      <div class="terminal-input" tabindex="0">
+        <span style="color:var(--neon)">root@cadush:~$ </span>
+        <span id="input"></span><span id="cursor">_</span>
+      </div>
+    </div>
+
+    <footer>
+      <p id="footer-text">
+        Carlos Eduardo © 2025 | 
+        <span data-text="Digite &lt;code&gt;help&lt;/code&gt; para comandos" data-en="Type &lt;code&gt;help&lt;/code&gt; for commands">Digite <code>help</code> para comandos</span> | 
+        <code>thm</code> 
+        <span data-text="para ver stats" data-en="to view stats">para ver stats</span>
+      </p>
+    </footer>
+  </div>
+
+  <!-- Estilo do badge TryHackMe -->
+  <style>
+    @keyframes scan-badge {
+      0% { box-shadow: 0 0 20px rgba(0,255,0,0.4), 0 0 0 0 rgba(0,255,0,0.7); }
+      50% { box-shadow: 0 0 25px rgba(0,255,0,0.5), 0 0 0 10px rgba(0,255,0,0); }
+      100% { box-shadow: 0 0 20px rgba(0,255,0,0.4), 0 0 0 0 rgba(0,255,0,0); }
+    }
+  </style>
+
+  <!-- Carrega o JS externo -->
+  <script src="script.js"></script>
+</body>
+</html>
