@@ -23,13 +23,12 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
-    canvas { position: fixed; top:0; left:0; z-index:-1; opacity:0.15; will-change: transform; }
+    canvas { position: fixed; top:0; left:0; z-index:-1; opacity:0.15; }
     .scan-line {
       position: fixed; top:0; left:0; width:100%; height:3px;
       background: linear-gradient(90deg, transparent, var(--neon), transparent);
       animation: scan 4s linear infinite;
       pointer-events: none; z-index: 10;
-      transform: translateZ(0);
     }
     @keyframes scan { 0% { transform: translateY(-100px); } 100% { transform: translateY(100vh); } }
     .terminal {
@@ -106,7 +105,6 @@
       height: 34px;
       transition: all 0.3s;
       filter: drop-shadow(0 0 5px rgba(0,255,0,0.3));
-      will-change: transform, filter;
     }
     .badges img:hover {
       transform: scale(1.15) rotate(3deg);
@@ -125,38 +123,16 @@
       border-right: 2px solid var(--neon);
       white-space: nowrap;
       width: 0;
-      animation: blink 0.7s infinite;
+      animation: typing 2.5s steps(40) forwards, blink 0.7s infinite;
     }
     @keyframes typing { from { width:0; } to { width:100%; } }
     @keyframes blink { 50% { border-color:transparent; } }
-
-    /* Terminal Output */
-    #terminal-output {
-      max-height: 300px;
-      overflow-y: auto;
-      margin: 20px 0;
-      padding-right: 10px;
-      font-family: 'Courier New', monospace;
-    }
-    #terminal-output > div {
-      margin: 8px 0;
-      animation: fadeIn 0.3s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     .terminal-input {
       margin-top: 40px;
       font-family: 'Courier New', monospace;
       color: var(--neon);
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
-    #cursor { animation: blink 1s infinite; color: var(--neon); }
-
+    #cursor { animation: blink 1s infinite; }
     footer {
       text-align: center;
       padding: 20px;
@@ -170,23 +146,12 @@
       .badges { gap:8px; }
       .badges img { height:30px; }
       .lang-switch { font-size: 0.7rem; padding: 3px 6px; }
-      .terminal-input { flex-wrap: wrap; }
-    }
-
-    /* Acessibilidade */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
     }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
   <div class="scan-line"></div>
-
   <div class="terminal">
     <div class="header">
       <div class="dots">
@@ -197,20 +162,18 @@
       <div class="title">root@cadush:~$</div>
       <div class="lang-switch" id="langSwitch">EN</div>
     </div>
-
     <div class="content">
-      <!-- Título com typing -->
-      <h1 id="typed-title" class="typing glitch" data-text="Carlos Santos">Carlos Santos</h1>
+      <h1 class="typing glitch" data-text="Carlos Santos">Carlos Santos</h1>
 
       <!-- About Me -->
-      <section class="scan-section">
+      <section>
         <h2 class="glitch" data-text="Sobre Mim" data-en="About Me">Sobre Mim</h2>
-        <p class="typing"
+        <p class="typing" 
            data-text="Olá! Eu sou &lt;strong&gt;Carlos Santos&lt;/strong&gt;, Analista de Segurança da Informação."
            data-en="Hi! I'm &lt;strong&gt;Carlos Santos&lt;/strong&gt;, Information Security Analyst.">
           Olá! Eu sou <strong>Carlos Santos</strong>, Analista de Segurança da Informação.
         </p>
-        <p class="typing"
+        <p class="typing" 
            data-text="&lt;strong&gt;Experiência:&lt;/strong&gt;"
            data-en="&lt;strong&gt;Experience:&lt;/strong&gt;">
           <strong>Experiência:</strong>
@@ -225,7 +188,7 @@
           <li class="typing" data-text="Atualmente: Analista de Segurança da Informação & TI II" data-en="Currently: Information Security & IT Analyst II">Atualmente: Analista de Segurança da Informação & TI II</li>
           <li class="typing" data-text="Aprendendo: LPI 101 | CC ISC² | CRTA" data-en="Learning: LPI 101 | CC ISC² | CRTA">Aprendendo: LPI 101 | CC ISC² | CRTA</li>
           <li class="typing" data-text="Pergunte sobre: Linux, Redes, Segurança da Informação" data-en="Ask me about: Linux, Networking, Cybersecurity">Pergunte sobre: Linux, Redes, Segurança da Informação</li>
-          <li class="typing"
+          <li class="typing" 
               data-text="Contato: &lt;a href='https://www.linkedin.com/in/cadush/' target='_blank'&gt;LinkedIn&lt;/a&gt;"
               data-en="Contact: &lt;a href='https://www.linkedin.com/in/cadush/' target='_blank'&gt;LinkedIn&lt;/a&gt;">
             Contato: <a href="https://www.linkedin.com/in/cadush/" target="_blank">LinkedIn</a>
@@ -234,13 +197,13 @@
       </section>
 
       <!-- Technologies -->
-      <section class="scan-section">
+      <section>
         <h2 class="glitch" data-text="Tecnologias" data-en="Technologies">Tecnologias</h2>
         <div class="badges" id="tech-badges"></div>
       </section>
 
       <!-- Certifications -->
-      <section class="scan-section">
+      <section>
         <h2 class="glitch" data-text="Certificações" data-en="Certifications">Certificações</h2>
         <p style="text-align:center; margin-bottom:15px;">
           <a href="https://www.linkedin.com/in/cadush/details/certifications/" target="_blank"
@@ -251,7 +214,7 @@
       </section>
 
       <!-- Projects -->
-      <section class="scan-section">
+      <section>
         <h2 class="glitch" data-text="Projetos" data-en="Projects">Projetos</h2>
         <ul>
           <li><a href="https://github.com/Cadush/SCAN_REDE" target="_blank">SCAN_REDE</a> – <span data-text="Script Bash para escaneamento de redes locais." data-en="Bash script for local network scanning.">Script Bash para escaneamento de redes locais.</span></li>
@@ -261,7 +224,7 @@
       </section>
 
       <!-- Skills -->
-      <section class="scan-section">
+      <section>
         <h2 class="glitch" data-text="Skills" data-en="Skills">Skills</h2>
         <div style="columns:2; column-gap:20px;">
           <ul style="padding-left:20px;">
@@ -281,7 +244,7 @@
       </section>
 
       <!-- TryHackMe -->
-      <section class="scan-section">
+      <section>
         <h2 class="glitch" data-text="TryHackMe" data-en="TryHackMe">TryHackMe</h2>
         <div style="display:flex; justify-content:center; margin:20px 0;">
           <a href="https://tryhackme.com/p/c.sh" target="_blank" style="text-decoration:none;">
@@ -293,36 +256,140 @@
         </p>
       </section>
 
-      <!-- Terminal Output -->
-      <div id="terminal-output"></div>
+      <style>
+        @keyframes scan-badge {
+          0% { box-shadow: 0 0 20px rgba(0,255,0,0.4), 0 0 0 0 rgba(0,255,0,0.7); }
+          50% { box-shadow: 0 0 25px rgba(0,255,0,0.5), 0 0 0 10px rgba(0,255,0,0); }
+          100% { box-shadow: 0 0 20px rgba(0,255,0,0.4), 0 0 0 0 rgba(0,255,0,0); }
+        }
+      </style>
 
-      <!-- Terminal Input -->
-      <div class="terminal-input" tabindex="0">
+      <div class="terminal-input">
         <span style="color:var(--neon)">root@cadush:~$ </span>
         <span id="input"></span><span id="cursor">_</span>
       </div>
     </div>
-
     <footer>
       <p id="footer-text">
-        Carlos Eduardo © 2025 | 
-        <span data-text="Digite &lt;code&gt;help&lt;/code&gt; para comandos" data-en="Type &lt;code&gt;help&lt;/code&gt; for commands">Digite <code>help</code> para comandos</span> | 
-        <code>thm</code> 
-        <span data-text="para ver stats" data-en="to view stats">para ver stats</span>
+        Carlos Eduardo © 2025 | <span data-text="Digite &lt;code&gt;help&lt;/code&gt; para comandos" data-en="Type &lt;code&gt;help&lt;/code&gt; for commands">Digite <code>help</code> para comandos</span> | <code>thm</code> <span data-text="para ver stats" data-en="to view stats">para ver stats</span>
       </p>
     </footer>
   </div>
 
-  <!-- Estilo do badge TryHackMe -->
-  <style>
-    @keyframes scan-badge {
-      0% { box-shadow: 0 0 20px rgba(0,255,0,0.4), 0 0 0 0 rgba(0,255,0,0.7); }
-      50% { box-shadow: 0 0 25px rgba(0,255,0,0.5), 0 0 0 10px rgba(0,255,0,0); }
-      100% { box-shadow: 0 0 20px rgba(0,255,0,0.4), 0 0 0 0 rgba(0,255,0,0); }
+  <script>
+    // === MATRIX RAIN ===
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const matrix = "01"; const fontSize = 14;
+    const columns = canvas.width / fontSize; const drops = [];
+    for (let i = 0; i < columns; i++) drops[i] = 1;
+    function draw() {
+      ctx.fillStyle = 'rgba(13,17,23,0.05)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#0f0'; ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random()*2)];
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+        if (drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
     }
-  </style>
+    setInterval(draw, 35);
+    window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; });
 
-  <!-- Carrega o JS externo -->
-  <script src="script.js"></script>
+    // === BADGES FUNCTIONS (before use) ===
+    function getColor(name) {
+      const colors = { "Bash": "4EAA25", "Linux": "FCC624", "Suricata": "FF0000", "Metasploit": "00ADEF", "Hashcat": "1ABC9C", "Kaspersky": "0C75D5", "Docker": "2496ED", "Nmap": "238636", "dirb": "FF6A00", "netcat": "1F8ACB", "SSH": "007ACC", "pfSense": "FF0033", "iptables": "CC0000" };
+      return colors[name] || "8B949E";
+    }
+    function getLogo(name) {
+      const logos = { "Bash": "gnu-bash", "Linux": "linux", "Suricata": "suricata", "Metasploit": "metasploit", "Docker": "docker", "Nmap": "nmap", "SSH": "openssh" };
+      return logos[name] || "circle";
+    }
+    function getCertLogo(name) {
+      const logos = { "IBSEC": "ibm", "Linux Foundation": "linuxfoundation", "Cisco": "cisco", "Fortinet": "fortinet", "EC-Council": "eccouncil", "Cybrary": "cybrary" };
+      return logos[name] || "graduation-cap";
+    }
+    function createBadge(src, alt, url) {
+      const link = document.createElement('a');
+      link.href = url; link.target = "_blank"; link.rel = "noopener"; link.title = `Docs: ${alt}`;
+      const img = new Image(); img.src = src; img.alt = alt; img.loading = "lazy";
+      link.appendChild(img); return link;
+    }
+
+    // === BADGES DATA ===
+    const techDocs = { "Bash": "https://www.gnu.org/software/bash/manual/", "Linux": "https://www.kernel.org/", "Suricata": "https://suricata.io/documentation/", "Metasploit": "https://docs.metasploit.com/", "Hashcat": "https://hashcat.net/wiki/", "Kaspersky": "https://www.kaspersky.com/enterprise-security/wiki", "Docker": "https://docs.docker.com/", "Nmap": "https://nmap.org/book/man.html", "dirb": "https://github.com/v0re/dirb", "netcat": "https://nmap.org/ncat/guide/index.html", "SSH": "https://www.openssh.com/manual.html", "pfSense": "https://docs.netgate.com/pfsense/en/latest/", "iptables": "https://www.netfilter.org/documentation/" };
+    const certDocs = { "IBSEC": "https://www.ibm.com/security", "Linux Foundation": "https://training.linuxfoundation.org/certification/", "Cisco": "https://www.cisco.com/c/en/us/training-events/training-certifications.html", "Fortinet": "https://training.fortinet.com/", "Skill Front": "https://www.skillfront.com/", "Cybrary": "https://www.cybrary.it/", "EC-Council": "https://www.eccouncil.org/" };
+
+    // === CREATE BADGES ===
+    const techContainer = document.getElementById('tech-badges');
+    const certContainer = document.getElementById('cert-badges');
+    Object.entries(techDocs).forEach(([name, url]) => {
+      const src = `https://img.shields.io/badge/${encodeURIComponent(name)}-${getColor(name)}?style=for-the-badge&logo=${getLogo(name)}&logoColor=white`;
+      techContainer.appendChild(createBadge(src, name, url));
+    });
+    Object.entries(certDocs).forEach(([name, url]) => {
+      const cleanName = name.replace(/ /g, "%20");
+      const src = `https://img.shields.io/badge/${cleanName}-000000?style=for-the-badge&logo=${getCertLogo(name)}&logoColor=white`;
+      certContainer.appendChild(createBadge(src, name, url));
+    });
+
+    // === LANGUAGE SWITCHER ===
+    let currentLang = 'pt';
+    const langSwitch = document.getElementById('langSwitch');
+    const translatable = document.querySelectorAll('[data-text], [data-en]');
+
+    function switchLanguage() {
+      currentLang = currentLang === 'pt' ? 'en' : 'pt';
+      langSwitch.textContent = currentLang === 'pt' ? 'EN' : 'PT';
+
+      translatable.forEach(el => {
+        const pt = el.getAttribute('data-text');
+        const en = el.getAttribute('data-en');
+        if (en) {
+          const html = currentLang === 'en' ? en : pt;
+          el.innerHTML = html.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        }
+      });
+
+      // Footer
+      document.getElementById('footer-text').innerHTML = `
+        Carlos Eduardo © 2025 | 
+        <span>${currentLang === 'pt' ? 'Digite &lt;code&gt;help&lt;/code&gt; para comandos' : 'Type &lt;code&gt;help&lt;/code&gt; for commands'}</span> | 
+        <code>thm</code> 
+        <span>${currentLang === 'pt' ? 'para ver stats' : 'to view stats'}</span>
+      `.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    }
+
+    langSwitch.addEventListener('click', switchLanguage);
+
+    // === TERMINAL ===
+    let input = '';
+    const inputEl = document.getElementById('input');
+    const helpMsg = { pt: 'Comandos: about, clear, hack, scan, certs, thm', en: 'Commands: about, clear, hack, scan, certs, thm' };
+    const hackMsg = { pt: 'Acessando mainframe... [OK]', en: 'Accessing mainframe... [OK]' };
+    const scanMsg = { pt: 'Scanning portfolio... [Vulnerabilidades: 0]', en: 'Scanning portfolio... [Vulnerabilities: 0]' };
+
+    document.addEventListener('keydown', e => {
+      if (e.ctrlKey && e.key === 'h') {
+        document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+        setTimeout(() => document.body.style.filter = '', 800);
+      }
+      if (e.key === 'Enter') {
+        if (input === 'help') alert(helpMsg[currentLang]);
+        else if (input === 'hack') alert(hackMsg[currentLang]);
+        else if (input === 'clear') location.reload();
+        else if (input === 'scan') alert(scanMsg[currentLang]);
+        else if (input === 'certs') window.open('https://www.linkedin.com/in/cadush/details/certifications/', '_blank');
+        else if (input === 'thm') window.open('https://tryhackme.com/p/c.sh', '_blank');
+        input = ''; inputEl.textContent = '';
+      } else if (e.key === 'Backspace') {
+        input = input.slice(0, -1); inputEl.textContent = input;
+      } else if (e.key.length === 1) {
+        input += e.key; inputEl.textContent = input;
+      }
+    });
+  </script>
 </body>
+<script src="script.js"></script>
 </html>
