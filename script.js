@@ -252,11 +252,11 @@
       setTimeout(() => typeText(title, title.getAttribute('data-text') || "Carlos Santos"), 800);
     }
 
-    // Foco no terminal
-    const terminalInput = document.querySelector('.terminal-input');
-    if (terminalInput) {
-      terminalInput.setAttribute('tabindex', '0');
-      terminalInput.focus();
+   # // Foco no terminal
+    #const terminalInput = document.querySelector('.terminal-input');
+    #if (terminalInput) {
+     #terminalInput.setAttribute('tabindex', '0');
+      #terminalInput.focus();
     }
   });
 
