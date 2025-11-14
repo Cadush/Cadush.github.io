@@ -140,12 +140,41 @@
       font-size: 0.9rem;
       border-top: 1px solid var(--border);
     }
+    .project-item {
+      background: var(--dark);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-item:hover {
+      border-color: var(--neon);
+      box-shadow: 0 0 15px rgba(0,255,0,0.3);
+      transform: translateY(-2px);
+    }
+    .project-item a {
+      font-weight: bold;
+      color: var(--neon);
+    }
+    .project-item a:hover {
+      color: #0f0;
+      text-shadow: 0 0 8px var(--neon);
+    }
+    .project-badge {
+      display: inline-block;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
     @media (max-width: 600px) {
       .content { padding:20px; }
       h1 { font-size:1.8rem; }
       .badges { gap:8px; }
       .badges img { height:30px; }
       .lang-switch { font-size: 0.7rem; padding: 3px 6px; }
+      .project-item { padding: 12px; }
     }
   </style>
 </head>
@@ -168,12 +197,12 @@
       <!-- About Me -->
       <section>
         <h2 class="glitch" data-text="Sobre Mim" data-en="About Me">Sobre Mim</h2>
-        <p class="typing" 
+        <p class="typing"
            data-text="Olá! Eu sou &lt;strong&gt;Carlos Santos&lt;/strong&gt;, Analista de Segurança da Informação."
            data-en="Hi! I'm &lt;strong&gt;Carlos Santos&lt;/strong&gt;, Information Security Analyst.">
           Olá! Eu sou <strong>Carlos Santos</strong>, Analista de Segurança da Informação.
         </p>
-        <p class="typing" 
+        <p class="typing"
            data-text="&lt;strong&gt;Experiência:&lt;/strong&gt;"
            data-en="&lt;strong&gt;Experience:&lt;/strong&gt;">
           <strong>Experiência:</strong>
@@ -188,7 +217,7 @@
           <li class="typing" data-text="Atualmente: Analista de Segurança da Informação & TI II" data-en="Currently: Information Security & IT Analyst II">Atualmente: Analista de Segurança da Informação & TI II</li>
           <li class="typing" data-text="Aprendendo: LPI 101 | CC ISC² | CRTA" data-en="Learning: LPI 101 | CC ISC² | CRTA">Aprendendo: LPI 101 | CC ISC² | CRTA</li>
           <li class="typing" data-text="Pergunte sobre: Linux, Redes, Segurança da Informação" data-en="Ask me about: Linux, Networking, Cybersecurity">Pergunte sobre: Linux, Redes, Segurança da Informação</li>
-          <li class="typing" 
+          <li class="typing"
               data-text="Contato: &lt;a href='https://www.linkedin.com/in/cadush/' target='_blank'&gt;LinkedIn&lt;/a&gt;"
               data-en="Contact: &lt;a href='https://www.linkedin.com/in/cadush/' target='_blank'&gt;LinkedIn&lt;/a&gt;">
             Contato: <a href="https://www.linkedin.com/in/cadush/" target="_blank">LinkedIn</a>
@@ -216,11 +245,42 @@
       <!-- Projects -->
       <section>
         <h2 class="glitch" data-text="Projetos" data-en="Projects">Projetos</h2>
-        <ul>
-          <li><a href="https://github.com/Cadush/SCAN_REDE" target="_blank">SCAN_REDE</a> – <span data-text="Script Bash para escaneamento de redes locais." data-en="Bash script for local network scanning.">Script Bash para escaneamento de redes locais.</span></li>
-          <li><a href="https://github.com/Cadush/imapsync_Migracao" target="_blank">imapsync_Migracao</a> – <span data-text="Automação de migração de e-mails IMAP." data-en="IMAP email migration automation.">Automação de migração de e-mails IMAP.</span></li>
-          <li><a href="https://github.com/Cadush/Backup" target="_blank">Backup</a> – <span data-text="Backup automatizado com rsync + cron." data-en="Automated backup with rsync + cron.">Backup automatizado com rsync + cron.</span></li>
-        </ul>
+        <div class="project-item">
+          <a href="https://github.com/Cadush/Calculadora_Redes" target="_blank">
+            Calculadora_Redes
+            <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" class="project-badge">
+          </a>
+          <br>
+          <span class="typing"
+                data-text="Calculadora de sub-redes IPv4 com interface Rich no terminal."
+                data-en="IPv4 subnet calculator with Rich terminal interface.">
+            Calculadora de sub-redes IPv4 com interface Rich no terminal.
+          </span>
+        </div>
+        <div class="project-item">
+          <a href="https://github.com/Cadush/SCAN_REDE" target="_blank">
+            SCAN_REDE
+            <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" class="project-badge">
+          </a>
+          <br>
+          <span data-text="Script Bash para escaneamento de redes locais." data-en="Bash script for local network scanning.">Script Bash para escaneamento de redes locais.</span>
+        </div>
+        <div class="project-item">
+          <a href="https://github.com/Cadush/imapsync_Migracao" target="_blank">
+            imapsync_Migracao
+            <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" class="project-badge">
+          </a>
+          <br>
+          <span data-text="Automação de migração de e-mails IMAP." data-en="IMAP email migration automation.">Automação de migração de e-mails IMAP.</span>
+        </div>
+        <div class="project-item">
+          <a href="https://github.com/Cadush/Backup" target="_blank">
+            Backup
+            <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" class="project-badge">
+          </a>
+          <br>
+          <span data-text="Backup automatizado com rsync + cron." data-en="Automated backup with rsync + cron.">Backup automatizado com rsync + cron.</span>
+        </div>
       </section>
 
       <!-- Skills -->
@@ -297,7 +357,7 @@
     setInterval(draw, 35);
     window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; });
 
-    // === BADGES FUNCTIONS (before use) ===
+    // === BADGES FUNCTIONS ===
     function getColor(name) {
       const colors = { "Bash": "4EAA25", "Linux": "FCC624", "Suricata": "FF0000", "Metasploit": "00ADEF", "Hashcat": "1ABC9C", "Kaspersky": "0C75D5", "Docker": "2496ED", "Nmap": "238636", "dirb": "FF6A00", "netcat": "1F8ACB", "SSH": "007ACC", "pfSense": "FF0033", "iptables": "CC0000" };
       return colors[name] || "8B949E";
@@ -338,11 +398,9 @@
     let currentLang = 'pt';
     const langSwitch = document.getElementById('langSwitch');
     const translatable = document.querySelectorAll('[data-text], [data-en]');
-
     function switchLanguage() {
       currentLang = currentLang === 'pt' ? 'en' : 'pt';
       langSwitch.textContent = currentLang === 'pt' ? 'EN' : 'PT';
-
       translatable.forEach(el => {
         const pt = el.getAttribute('data-text');
         const en = el.getAttribute('data-en');
@@ -351,16 +409,13 @@
           el.innerHTML = html.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
         }
       });
-
-      // Footer
       document.getElementById('footer-text').innerHTML = `
-        Carlos Eduardo © 2025 | 
-        <span>${currentLang === 'pt' ? 'Digite &lt;code&gt;help&lt;/code&gt; para comandos' : 'Type &lt;code&gt;help&lt;/code&gt; for commands'}</span> | 
-        <code>thm</code> 
+        Carlos Eduardo © 2025 |
+        <span>${currentLang === 'pt' ? 'Digite &lt;code&gt;help&lt;/code&gt; para comandos' : 'Type &lt;code&gt;help&lt;/code&gt; for commands'}</span> |
+        <code>thm</code>
         <span>${currentLang === 'pt' ? 'para ver stats' : 'to view stats'}</span>
       `.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
     }
-
     langSwitch.addEventListener('click', switchLanguage);
 
     // === TERMINAL ===
@@ -369,7 +424,6 @@
     const helpMsg = { pt: 'Comandos: about, clear, hack, scan, certs, thm', en: 'Commands: about, clear, hack, scan, certs, thm' };
     const hackMsg = { pt: 'Acessando mainframe... [OK]', en: 'Accessing mainframe... [OK]' };
     const scanMsg = { pt: 'Scanning portfolio... [Vulnerabilidades: 0]', en: 'Scanning portfolio... [Vulnerabilities: 0]' };
-
     document.addEventListener('keydown', e => {
       if (e.ctrlKey && e.key === 'h') {
         document.body.style.filter = 'invert(1) hue-rotate(180deg)';
@@ -391,5 +445,4 @@
     });
   </script>
 </body>
-<script src="script.js"></script>
 </html>
