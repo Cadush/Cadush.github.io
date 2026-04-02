@@ -33,7 +33,7 @@
     @keyframes scan { 0% { transform: translateY(-100px); } 100% { transform: translateY(100vh); } }
     .terminal {
       max-width: 1000px;
-      margin: 40px auto;
+      margin: 20px auto;
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -168,13 +168,36 @@
       margin-left: 8px;
       vertical-align: middle;
     }
+
+    /* === MOBILE RESPONSIVE === */
     @media (max-width: 600px) {
-      .content { padding:20px; }
-      h1 { font-size:1.8rem; }
-      .badges { gap:8px; }
-      .badges img { height:30px; }
+      .terminal { margin: 0; border-radius: 0; border-left: none; border-right: none; }
+      .content { padding: 16px; }
+      h1 { font-size: 1.4rem; margin-bottom: 20px; }
+      h2 { font-size: 1.2rem; }
+      .title { font-size: 0.75rem; }
       .lang-switch { font-size: 0.7rem; padding: 3px 6px; }
+      .badges { gap: 8px; }
+      .badges img { height: 28px; }
       .project-item { padding: 12px; }
+      .project-item img.project-badge { height: 22px; }
+      /* disable typing animation on mobile — causes overflow issues */
+      .typing {
+        white-space: normal;
+        overflow: visible;
+        width: auto;
+        border-right: none;
+        animation: none;
+      }
+      /* skills columns: single column on mobile */
+      div[style*="columns:2"] {
+        columns: 1 !important;
+      }
+      /* tryhackme badge full width */
+      #tryhackme-img { max-width: 100% !important; }
+      /* terminal input: smaller font */
+      .terminal-input { font-size: 0.85rem; margin-top: 24px; }
+      footer { font-size: 0.8rem; padding: 14px; }
     }
   </style>
 </head>
@@ -214,7 +237,7 @@
           <li class="typing" data-text="Administração de servidores Linux e Windows" data-en="Linux and Windows server administration">Administração de servidores Linux e Windows</li>
         </ul>
         <ul style="list-style:none; padding-left:0;">
-          <li class="typing" data-text="Atualmente: Analista de Segurança da Informação & TI II" data-en="Currently: Information Security & IT Analyst II">Atualmente: Analista de Segurança da Informação & TI II</li>
+          <li class="typing" data-text="Atualmente: Analista de Segurança da Informação &amp; TI II" data-en="Currently: Information Security &amp; IT Analyst II">Atualmente: Analista de Segurança da Informação &amp; TI II</li>
           <li class="typing" data-text="Aprendendo: LPI 101 | CC ISC² | CRTA" data-en="Learning: LPI 101 | CC ISC² | CRTA">Aprendendo: LPI 101 | CC ISC² | CRTA</li>
           <li class="typing" data-text="Pergunte sobre: Linux, Redes, Segurança da Informação" data-en="Ask me about: Linux, Networking, Cybersecurity">Pergunte sobre: Linux, Redes, Segurança da Informação</li>
           <li class="typing"
@@ -282,20 +305,19 @@
           <span data-text="Backup automatizado com rsync + cron." data-en="Automated backup with rsync + cron.">Backup automatizado com rsync + cron.</span>
         </div>
         <div class="project-item">
-       <a href="https://github.com/Cadush/LFIHUNTER" target="_blank">
-         LFIHUNTER
-         <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"
-             alt="GitHub"
-             class="project-badge">
-       </a>
-       <br>
-       <span class="typing"
-             data-text="Ferramenta em Python para detecção e validação de vulnerabilidades de LFI (Local File Inclusion) com foco em evidências claras e redução de falsos positivos."
-             data-en="Python-based tool to detect and validate LFI (Local File Inclusion) vulnerabilities with a focus on clear evidence and reduced false positives.">
-         Ferramenta em Python para detecção e validação de vulnerabilidades de LFI (Local File Inclusion) com foco em evidências claras e redução de falsos positivos.
-       </span>
-      </div>
-
+          <a href="https://github.com/Cadush/LFIHUNTER" target="_blank">
+            LFIHUNTER
+            <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"
+                alt="GitHub"
+                class="project-badge">
+          </a>
+          <br>
+          <span class="typing"
+                data-text="Ferramenta em Python para detecção e validação de vulnerabilidades de LFI (Local File Inclusion) com foco em evidências claras e redução de falsos positivos."
+                data-en="Python-based tool to detect and validate LFI (Local File Inclusion) vulnerabilities with a focus on clear evidence and reduced false positives.">
+            Ferramenta em Python para detecção e validação de vulnerabilidades de LFI (Local File Inclusion) com foco em evidências claras e redução de falsos positivos.
+          </span>
+        </div>
       </section>
 
       <!-- Skills -->
@@ -322,8 +344,8 @@
       <section>
         <h2 class="glitch" data-text="TryHackMe" data-en="TryHackMe">TryHackMe</h2>
         <div style="display:flex; justify-content:center; margin:20px 0;">
-          <a href="https://tryhackme.com/p/c.sh" target="_blank" style="text-decoration:none;">
-            <img src="https://tryhackme-badges.s3.amazonaws.com/c.sh.png" alt="TryHackMe Badge" style="max-width:380px; width:100%; border-radius:12px; border:2px solid var(--neon); box-shadow:0 0 20px rgba(0,255,0,0.4); transition:all 0.4s ease; animation:scan-badge 3s linear infinite;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(0,255,0,0.7)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(0,255,0,0.4)'"/>
+          <a href="https://tryhackme.com/p/c.sh" target="_blank" style="text-decoration:none; width:100%; max-width:380px;">
+            <img id="tryhackme-img" src="https://tryhackme-badges.s3.amazonaws.com/c.sh.png" alt="TryHackMe Badge" style="max-width:380px; width:100%; border-radius:12px; border:2px solid var(--neon); box-shadow:0 0 20px rgba(0,255,0,0.4); transition:all 0.4s ease; animation:scan-badge 3s linear infinite;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(0,255,0,0.7)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(0,255,0,0.4)'"/>
           </a>
         </div>
         <p style="text-align:center; color:#8b949e; font-size:0.9rem;">
@@ -426,10 +448,10 @@
       });
       document.getElementById('footer-text').innerHTML = `
         Carlos Eduardo © 2025 |
-        <span>${currentLang === 'pt' ? 'Digite &lt;code&gt;help&lt;/code&gt; para comandos' : 'Type &lt;code&gt;help&lt;/code&gt; for commands'}</span> |
+        <span>${currentLang === 'pt' ? 'Digite <code>help</code> para comandos' : 'Type <code>help</code> for commands'}</span> |
         <code>thm</code>
         <span>${currentLang === 'pt' ? 'para ver stats' : 'to view stats'}</span>
-      `.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+      `;
     }
     langSwitch.addEventListener('click', switchLanguage);
 
@@ -461,4 +483,3 @@
   </script>
 </body>
 </html>
--
