@@ -332,6 +332,18 @@
             Painel de monitoramento em tempo real para o Fail2Ban — exibe IPs banidos, detecta padrões de ataque e permite gerenciar bans diretamente pelo terminal.
           </span>
         </div>
+        <div class="project-item">
+          <a href="https://github.com/Cadush/Cadush.github.io" target="_blank">
+            Cadush.github.io
+            <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" class="project-badge">
+          </a>
+          <br>
+          <span
+                data-text="Portfólio pessoal com estilo terminal hacker."
+                data-en="Personal portfolio with hacker terminal style.">
+            Portfólio pessoal com estilo terminal hacker.
+          </span>
+        </div>
       </section>
 
       <!-- Skills -->
@@ -410,11 +422,11 @@
 
     // === BADGES FUNCTIONS ===
     function getColor(name) {
-      const colors = { "Bash": "4EAA25", "Linux": "FCC624", "Suricata": "FF0000", "Metasploit": "00ADEF", "Hashcat": "1ABC9C", "Kaspersky": "0C75D5", "Docker": "2496ED", "Nmap": "238636", "dirb": "FF6A00", "netcat": "1F8ACB", "SSH": "007ACC", "pfSense": "FF0033", "iptables": "CC0000" };
+      const colors = { "Bash": "4EAA25", "Linux": "FCC624", "Suricata": "FF0000", "Metasploit": "00ADEF", "Hashcat": "1ABC9C", "Kaspersky": "0C75D5", "Docker": "2496ED", "Nmap": "238636", "dirb": "FF6A00", "netcat": "1F8ACB", "SSH": "007ACC", "pfSense": "FF0033", "iptables": "CC0000", "FortiGate": "EE3124", "FortiWeb 400F": "EE3124", "Python": "3776AB", "Snort": "F80000", "Fail2ban": "8B0000", "AWS Security": "FF9900" };
       return colors[name] || "8B949E";
     }
     function getLogo(name) {
-      const logos = { "Bash": "gnu-bash", "Linux": "linux", "Suricata": "suricata", "Metasploit": "metasploit", "Docker": "docker", "Nmap": "nmap", "SSH": "openssh" };
+      const logos = { "Bash": "gnu-bash", "Linux": "linux", "Suricata": "suricata", "Metasploit": "metasploit", "Docker": "docker", "Nmap": "nmap", "SSH": "openssh", "FortiGate": "fortinet", "FortiWeb 400F": "fortinet", "Python": "python", "Snort": "snort", "Fail2ban": "linux", "AWS Security": "amazonaws" };
       return logos[name] || "circle";
     }
     function getCertLogo(name) {
@@ -429,8 +441,8 @@
     }
 
     // === BADGES DATA ===
-    const techDocs = { "Bash": "https://www.gnu.org/software/bash/manual/", "Linux": "https://www.kernel.org/", "Suricata": "https://suricata.io/documentation/", "Metasploit": "https://docs.metasploit.com/", "Hashcat": "https://hashcat.net/wiki/", "Kaspersky": "https://www.kaspersky.com/enterprise-security/wiki", "Docker": "https://docs.docker.com/", "Nmap": "https://nmap.org/book/man.html", "dirb": "https://github.com/v0re/dirb", "netcat": "https://nmap.org/ncat/guide/index.html", "SSH": "https://www.openssh.com/manual.html", "pfSense": "https://docs.netgate.com/pfsense/en/latest/", "iptables": "https://www.netfilter.org/documentation/" };
-    const certDocs = { "IBSEC": "https://www.ibm.com/security", "Linux Foundation": "https://training.linuxfoundation.org/certification/", "Cisco": "https://www.cisco.com/c/en/us/training-events/training-certifications.html", "Fortinet": "https://training.fortinet.com/", "Skill Front": "https://www.skillfront.com/", "Cybrary": "https://www.cybrary.it/", "EC-Council": "https://www.eccouncil.org/" };
+    const techDocs = { "Bash": "https://www.gnu.org/software/bash/manual/", "Linux": "https://www.kernel.org/", "Suricata": "https://suricata.io/documentation/", "Metasploit": "https://docs.metasploit.com/", "Hashcat": "https://hashcat.net/wiki/", "Kaspersky": "https://www.kaspersky.com/enterprise-security/wiki", "Docker": "https://docs.docker.com/", "Nmap": "https://nmap.org/book/man.html", "dirb": "https://github.com/v0re/dirb", "netcat": "https://nmap.org/ncat/guide/index.html", "SSH": "https://www.openssh.com/manual.html", "pfSense": "https://docs.netgate.com/pfsense/en/latest/", "iptables": "https://www.netfilter.org/documentation/", "FortiGate": "https://docs.fortinet.com/product/fortigate/", "FortiWeb 400F": "https://docs.fortinet.com/product/fortiweb/", "Python": "https://docs.python.org/3/", "Snort": "https://www.snort.org/documents", "Fail2ban": "https://www.fail2ban.org/wiki/index.php/Main_Page", "AWS Security": "https://aws.amazon.com/security/" };
+    const certDocs = { "IBSEC": "https://www.ibm.com/security", "Linux Foundation": "https://training.linuxfoundation.org/certification/", "Cisco": "https://www.cisco.com/c/en/us/training-events/training-certifications.html", "Fortinet": "https://training.fortinet.com/", "Skill Front": "https://www.skillfront.com/", "Cybrary": "https://www.cybrary.it/", "EC-Council": "https://www.eccouncil.org/", "The SecOps Group": "https://secops.group/", "Cyber Warfare": "https://www.cyberwarfare.live/" };
 
     // === CREATE BADGES ===
     const techContainer = document.getElementById('tech-badges');
